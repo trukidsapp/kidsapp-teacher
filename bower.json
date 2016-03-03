@@ -1,0 +1,20 @@
+{
+  "name": "kidsapp-teacher",
+  "description": "Teacher admin web app",
+  "version": "0.0.0",
+  "homepage": "https://github.com/trukidsapp/kidsapp-teacher",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.9",
+    "angular-route": "~1.4.0",
+    "angular-loader": "~1.4.0",
+    "angular-mocks": "~1.4.0",
+    "angular-animate": "^1.4.9",
+    "angular-jwt": "^0.0.9",
+    "angular-environment": "^1.0.3"
+  },
+  "resolutions": {
+    "angular": "1.4.9"
+  }
+}
