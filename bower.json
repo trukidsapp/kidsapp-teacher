@@ -12,7 +12,8 @@
     "angular-mocks": "~1.4.0",
     "angular-animate": "^1.4.9",
     "angular-jwt": "^0.0.9",
-    "angular-environment": "^1.0.3"
+    "angular-environment": "^1.0.3",
+    "bootstrap": "^3.3.6"
   },
   "resolutions": {
     "angular": "1.4.9"

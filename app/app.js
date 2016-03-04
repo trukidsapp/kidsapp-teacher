@@ -5,7 +5,8 @@ angular.module('app', [
   'app.authService',
   'app.nav',
   'app.home',
-  'app.login'
+  'app.login',
+  'app.class-list'
 
 ]).config(['$routeProvider', 'envServiceProvider', function ($routeProvider, envServiceProvider) {
   $routeProvider.otherwise({redirectTo: '/home'});

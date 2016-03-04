@@ -13,7 +13,8 @@ angular.module('app.nav', ['ngRoute'])
 
     $scope.logout = function () {
       console.log("Logging out");
-      authService.logout()
+      authService.logout();
+      window.location.reload(true);
     };
 
   }]);

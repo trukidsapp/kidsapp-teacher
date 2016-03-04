@@ -24,10 +24,8 @@ angular.module('app.authService', ['angular-jwt'])
         var payload = jwtHelper.decodeToken(window.localStorage['auth']);
         console.log(payload);
         return {
-          // TODO fix these
           username: payload.username,
-          id: payload.id,
-          isAdmin: payload.isAdmin
+          userType: payload.userType
         }
       },
 
