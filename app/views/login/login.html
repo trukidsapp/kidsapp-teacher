@@ -1,16 +1,24 @@
 <div class="container">
 
 
-	<form class="form-horizontal col-xs-4">
+	<form name="loginForm" class="form-horizontal col-xs-4" novalidate ng-submit="attemptLogin()">
+		<div ng-show="isLoginAuthFail" class="alert alert-danger" role="alert">Incorrect user name or password.</div>
+		<div ng-show="isLoginError" class="alert alert-danger" role="alert">We're sorry, an error has occurred. Please
+			contact your administrator.
+		</div>
 		<div class="form-group">
 			<label for="username">Username</label>
-			<input ng-model="user.username" type="text" class="form-control" id="username" placeholder="Username">
+			<input ng-model="user.username" type="text" class="form-control" id="username" placeholder="Username"
+			       minlength="1" required>
+
 		</div>
 		<div class="form-group">
 			<label for="password">Password</label>
-			<input ng-model="user.password" type="password" class="form-control" id="password" placeholder="Password">
+			<input ng-model="user.password" type="password" class="form-control" id="password" placeholder="Password"
+			       minlength="1" required>
 		</div>
-		<button ng-click="attemptLogin()" type="button" class="btn btn-default pull-right">Submit</button>
+
+		<button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-default pull-right">Submit</button>
 	</form>
 
 </div>
