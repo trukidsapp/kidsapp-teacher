@@ -21,7 +21,7 @@ angular.module('app', [
         apiUrl: "//localhost:8080/api"
       },
       production: {
-        apiUrl: "//24.70.42.226:8080/api"
+        apiUrl: "//kidsapp-api.herokuapp.com/api"
       }
     }
   });

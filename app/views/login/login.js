@@ -25,10 +25,10 @@ angular.module('app.login', ['ngRoute'])
 
     function authFailed(response) {
       if (response.status == 403) {
-        console.log('not authorized'); // TODO
+        $scope.isLoginAuthFail = true;
       }
       else {
-        console.log('fail');
+        $scope.isLoginError = true
       }
     }
 
