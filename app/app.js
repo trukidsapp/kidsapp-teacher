@@ -18,7 +18,7 @@ angular.module('app', [
     },
     vars: {
       development: {
-        apiUrl: "//localhost:8080/api"
+        apiUrl: "//localhost:5000/api"
       },
       production: {
         apiUrl: "//kidsapp-api.herokuapp.com/api"
