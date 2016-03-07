@@ -11,7 +11,7 @@ angular.module('app.class-list', ['ngRoute'])
 
   .controller('ClassListController', ['$http', '$scope', '$location', 'authService', 'envService', function ($http, $scope, $location, authService, envService) {
     $http
-      .get('http:' + envService.read('apiUrl') + '/classes', {
+      .get('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes', {
         headers: authService.getAPITokenHeader()
       }).then(classRetrieveSuccess, classRetrieveFailure);
 
@@ -23,6 +23,7 @@ angular.module('app.class-list', ['ngRoute'])
     function classRetrieveFailure(response) {
       if (response.status == 404) {
         console.log('no classes found');
+        $scope.classes = [];
       }
       else {
         console.log('failed' + response.status);
@@ -52,7 +53,7 @@ angular.module('app.class-list', ['ngRoute'])
       $scope.class.TeacherUsername = authService.getTokenUser().username;
       console.log('http:' + envService.read('apiUrl') + '/classes');
       $http
-        .post('http:' + envService.read('apiUrl') + '/classes', $scope.class, {
+        .post('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes', $scope.class, {
           headers: authService.getAPITokenHeader()
         }).then(classAddSuccess, classAddFailure);
     };
