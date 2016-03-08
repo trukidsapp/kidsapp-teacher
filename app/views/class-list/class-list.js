@@ -10,8 +10,10 @@ angular.module('app.class-list', ['ngRoute'])
   }])
 
   .controller('ClassListController', ['$http', '$scope', '$location', 'authService', 'envService', function ($http, $scope, $location, authService, envService) {
+    var teacherId = authService.getTokenUser().username;
+
     $http
-      .get('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes', {
+      .get('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes', {
         headers: authService.getAPITokenHeader()
       }).then(classRetrieveSuccess, classRetrieveFailure);
 
@@ -52,14 +54,14 @@ angular.module('app.class-list', ['ngRoute'])
       if ($scope.action == 'Add') {
         //add
         $http
-          .post('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes', $scope.class, {
+          .post('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes', $scope.class, {
             headers: authService.getAPITokenHeader()
           }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
       }
       else {
         //edit
         $http
-          .put('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes/' + $scope.class.id, $scope.class, {
+          .put('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes/' + $scope.class.id, $scope.class, {
             headers: authService.getAPITokenHeader()
           }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
       }
@@ -72,7 +74,7 @@ angular.module('app.class-list', ['ngRoute'])
         $scope.action = "Delete";
         console.log('delete class ' + idToDelete);
         $http
-          .delete('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes/' + idToDelete, {
+          .delete('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes/' + idToDelete, {
             headers: authService.getAPITokenHeader()
           }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
       }
