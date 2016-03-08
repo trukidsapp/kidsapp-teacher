@@ -31,42 +31,73 @@ angular.module('app.class-list', ['ngRoute'])
     }
 
     $scope.addClassBtnClick = function () {
-      $('#addClassModal').modal('show');
+      $scope.action = 'Add';
+      $('#addEditClassModal').modal('show');
       $scope.class = {};
     };
 
-    $scope.saveNewClassBtnClick = function () {
+    $scope.editClassBtnClick = function (toEdit) {
+      console.log('edit class ' + toEdit.id);
+      // ensure editing a copy of the object so model in view behind modal doesn't update until save
+      $scope.class = Object.create(toEdit);
+      console.log($scope.class);
+      $scope.action = "Edit";
+      $('#addEditClassModal').modal('show');
+    };
 
-      function classAddFailure() {
-        console.log('adding class failed');
-        // TODO error msg?
-      }
-
-      function classAddSuccess() {
-        console.log('class added');
-        console.log($scope.class);
-        $scope.classes.push($scope.class);
-        $('#addClassModal').modal('hide');
-        showSuccessMsg();
-      }
+    $scope.addEditClassDoneBtnClick = function () {
+      console.log($scope.action + ' click');
 
       $scope.class.TeacherUsername = authService.getTokenUser().username;
-      console.log('http:' + envService.read('apiUrl') + '/classes');
-      $http
-        .post('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes', $scope.class, {
-          headers: authService.getAPITokenHeader()
-        }).then(classAddSuccess, classAddFailure);
+      if ($scope.action == 'Add') {
+        //add
+        $http
+          .post('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes', $scope.class, {
+            headers: authService.getAPITokenHeader()
+          }).then(classAddEditSuccess, classAddEditFailure);
+      }
+      else {
+        //edit
+        $http
+          .put('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes/' + $scope.class.id, $scope.class, {
+            headers: authService.getAPITokenHeader()
+          }).then(classAddEditSuccess, classAddEditFailure);
+      }
     };
 
-    $scope.editClassBtnClick = function (id) {
-      console.log('edit class' + id);
-      // TODO
-    };
+    function classAddEditSuccess(response) {
+      console.log('class ' + $scope.action + 'ed successfully');
+      console.log(response);
+      console.log($scope.class);
+
+      if ($scope.action == "Add") {
+        $scope.classes.push($scope.class);
+      }
+      else {
+        // TODO replace the class in the view array
+        // find id in $scope.classes , replace that element with $scope.class
+
+      }
+      $('#addEditClassModal').modal('hide');
+      showSuccessMsg();
+    }
+
+    function classAddEditFailure(response) {
+      console.error(response);
+      showFailMsg();
+    }
 
     function showSuccessMsg() {
       $('#updateSuccessAlert').show();
       setTimeout(function () {
         $('#updateSuccessAlert').fadeOut();
+      }, 7000);
+    }
+
+    function showFailMsg() {
+      $('#updateFailAlert').show();
+      setTimeout(function () {
+        $('#updateFailAlert').fadeOut();
       }, 7000);
     }
 

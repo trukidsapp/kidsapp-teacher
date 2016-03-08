@@ -4,15 +4,19 @@
 		<strong>Update Successful</strong> Your changes were saved successfully.
 	</div>
 
-	<!--Add Class Modal-->
-	<div class="modal fade" id="addClassModal" tabindex="-1" role="dialog" aria-labelledby="addClassLabel">
+	<div id="updateFailAlert" class="alert alert-danger" style="display: none;">
+		<strong>Update Failed</strong> A problem occurred while saving your changes.
+	</div>
+
+	<!--Add/Edit Class Modal-->
+	<div class="modal fade" id="addEditClassModal" tabindex="-1" role="dialog" aria-labelledby="addEditClassLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<form name="addClassForm" novalidate>
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
 								aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="addClassModalLabel">Add Class</h4>
+						<h4 class="modal-title" id="addEditClassModalLabel">{{action}} Class</h4>
 					</div>
 					<div class="modal-body">
 						<div class="row">
@@ -30,9 +34,11 @@
 							</div>
 						</div>
 						<div class="modal-footer">
+							<button type="button" ng-show="action == 'Edit'" class="btn btn-danger pull-left">Delete
+							</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 							<button type="submit" ng-disabled="addClassForm.$invalid" class="btn btn-default"
-							        ng-click="saveNewClassBtnClick()">Add
+							        ng-click="addEditClassDoneBtnClick()">Save
 							</button>
 						</div>
 
@@ -60,7 +66,7 @@
 			<td>{{class.grade}}</td>
 			<td>{{class.TeacherUsername}}</td>
 			<td>
-				<button type="button" class="btn btn-xs btn-default" ng-click="editClassBtnClick($index)">Edit
+				<button type="button" class="btn btn-xs btn-default" ng-click="editClassBtnClick(class)">Edit
 				</button>
 				<button type="button" class="btn btn-xs btn-default">Manage Students
 				</button>
