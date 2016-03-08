@@ -67,8 +67,6 @@ angular.module('app.class-list', ['ngRoute'])
       }
     };
 
-    // TODO save edits fails 404?
-
     $scope.deleteClassBtnClick = function (idToDelete) {
       if (confirm("Are you sure you want to delete the class? This cannot be undone")) {
         $scope.action = "Delete";
@@ -78,7 +76,6 @@ angular.module('app.class-list', ['ngRoute'])
             headers: authService.getAPITokenHeader()
           }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
       }
-
     };
 
     function classAddEditDeleteSuccess(response) {
@@ -100,7 +97,7 @@ angular.module('app.class-list', ['ngRoute'])
         // find class in model and replace with the updated one
         for (var c in $scope.classes) {
           if ($scope.classes.hasOwnProperty(c) && $scope.classes.id == c.id) {
-            c = $scope.class;
+            $scope.classes[c] = $scope.class;
             break;
           }
         }
