@@ -39,15 +39,15 @@ angular.module('app.class-list', ['ngRoute'])
     $scope.editClassBtnClick = function (toEdit) {
       console.log('edit class ' + toEdit.id);
       // ensure editing a copy of the object so model in view behind modal doesn't update until save
-      $scope.class = Object.create(toEdit);
+      $scope.class = JSON.parse(JSON.stringify(toEdit)); // TODO this is a hack, better way?
       console.log($scope.class);
       $scope.action = "Edit";
       $('#modifyClassModal').modal('show');
     };
 
     $scope.addEditClassDoneBtnClick = function () {
-      console.log($scope.action + ' click');
-
+      console.log($scope.action + ' done click');
+      console.log($scope.class);
       $scope.class.TeacherUsername = authService.getTokenUser().username;
       if ($scope.action == 'Add') {
         //add
@@ -95,9 +95,13 @@ angular.module('app.class-list', ['ngRoute'])
 
       }
       else {
-        // TODO replace the class in the view array
-        // find id in $scope.classes , replace that element with $scope.class
-
+        // find class in model and replace with the updated one
+        for (var c in $scope.classes) {
+          if ($scope.classes.hasOwnProperty(c) && $scope.classes.id == c.id) {
+            c = $scope.class;
+            break;
+          }
+        }
       }
       $('#modifyClassModal').modal('hide');
       showSuccessMsg();
