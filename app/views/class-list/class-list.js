@@ -32,7 +32,7 @@ angular.module('app.class-list', ['ngRoute'])
 
     $scope.addClassBtnClick = function () {
       $scope.action = 'Add';
-      $('#addEditClassModal').modal('show');
+      $('#modifyClassModal').modal('show');
       $scope.class = {};
     };
 
@@ -42,7 +42,7 @@ angular.module('app.class-list', ['ngRoute'])
       $scope.class = Object.create(toEdit);
       console.log($scope.class);
       $scope.action = "Edit";
-      $('#addEditClassModal').modal('show');
+      $('#modifyClassModal').modal('show');
     };
 
     $scope.addEditClassDoneBtnClick = function () {
@@ -54,18 +54,30 @@ angular.module('app.class-list', ['ngRoute'])
         $http
           .post('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes', $scope.class, {
             headers: authService.getAPITokenHeader()
-          }).then(classAddEditSuccess, classAddEditFailure);
+          }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
       }
       else {
         //edit
         $http
           .put('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes/' + $scope.class.id, $scope.class, {
             headers: authService.getAPITokenHeader()
-          }).then(classAddEditSuccess, classAddEditFailure);
+          }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
       }
     };
 
-    function classAddEditSuccess(response) {
+    // TODO save edits fails 404?
+
+    $scope.deleteClassBtnClick = function (idToDelete) {
+      $scope.action = "Delete";
+      console.log('delete class ' + idToDelete);
+      $http
+        .delete('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes/' + idToDelete, {
+          headers: authService.getAPITokenHeader()
+        }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
+
+    };
+
+    function classAddEditDeleteSuccess(response) {
       console.log('class ' + $scope.action + 'ed successfully');
       console.log(response);
       console.log($scope.class);
@@ -73,16 +85,23 @@ angular.module('app.class-list', ['ngRoute'])
       if ($scope.action == "Add") {
         $scope.classes.push($scope.class);
       }
+      else if ($scope.action == "Delete") {
+
+        $scope.classes = $scope.classes.filter(function (item) {
+          return item.id != $scope.class.id;
+        });
+
+      }
       else {
         // TODO replace the class in the view array
         // find id in $scope.classes , replace that element with $scope.class
 
       }
-      $('#addEditClassModal').modal('hide');
+      $('#modifyClassModal').modal('hide');
       showSuccessMsg();
     }
 
-    function classAddEditFailure(response) {
+    function classAddEditDeleteFailure(response) {
       console.error(response);
       showFailMsg();
     }
