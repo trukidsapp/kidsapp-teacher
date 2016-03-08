@@ -50,7 +50,7 @@ angular.module('app.class-list', ['ngRoute'])
     $scope.addEditClassDoneBtnClick = function () {
       console.log($scope.action + ' done click');
       console.log($scope.class);
-      $scope.class.TeacherUsername = authService.getTokenUser().username;
+      $scope.class.TeacherUsername = teacherId;
       if ($scope.action == 'Add') {
         //add
         $http
