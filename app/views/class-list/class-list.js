@@ -47,7 +47,7 @@ angular.module('app.class-list', ['ngRoute'])
       $('#modifyClassModal').modal('show');
     };
 
-    $scope.addEditClassDoneBtnClick = function () {
+    $scope.modifyClassDoneBtnClick = function () {
       console.log($scope.action + ' done click');
       console.log($scope.class);
       $scope.class.TeacherUsername = teacherId;
@@ -56,14 +56,14 @@ angular.module('app.class-list', ['ngRoute'])
         $http
           .post('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes', $scope.class, {
             headers: authService.getAPITokenHeader()
-          }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
+          }).then(classModifySuccess, classModifyFailure);
       }
       else {
         //edit
         $http
           .put('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes/' + $scope.class.id, $scope.class, {
             headers: authService.getAPITokenHeader()
-          }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
+          }).then(classModifySuccess, classModifyFailure);
       }
     };
 
@@ -74,11 +74,11 @@ angular.module('app.class-list', ['ngRoute'])
         $http
           .delete('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes/' + idToDelete, {
             headers: authService.getAPITokenHeader()
-          }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
+          }).then(classModifySuccess, classModifyFailure);
       }
     };
 
-    function classAddEditDeleteSuccess(response) {
+    function classModifySuccess(response) {
       console.log('class ' + $scope.action + 'ed successfully');
       console.log(response);
       console.log($scope.class);
@@ -104,7 +104,7 @@ angular.module('app.class-list', ['ngRoute'])
       showSuccessMsg();
     }
 
-    function classAddEditDeleteFailure(response) {
+    function classModifyFailure(response) {
       console.error(response);
       showFailMsg();
     }
