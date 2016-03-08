@@ -4,7 +4,7 @@ angular.module('app.nav', ['ngRoute'])
 
   .controller('navController', ['$rootScope', '$scope', '$location', 'authService', function ($rootScope, $scope, $location, authService) {
 
-    $scope.templateUrl = 'views/nav/nav_public.html';
+    $scope.templateUrl = (authService.isUserAuthenticated()) ? 'views/nav/nav_private.html' : 'views/nav/nav_public.html';
 
     $scope.isActive = function (location) {
       return location == $location.path();
