@@ -47,7 +47,7 @@ angular.module('app.class-list', ['ngRoute'])
       $('#modifyClassModal').modal('show');
     };
 
-    $scope.addEditClassDoneBtnClick = function () {
+    $scope.modifyClassDoneBtnClick = function () {
       console.log($scope.action + ' done click');
       console.log($scope.class);
       $scope.class.TeacherUsername = teacherId;
@@ -56,18 +56,16 @@ angular.module('app.class-list', ['ngRoute'])
         $http
           .post('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes', $scope.class, {
             headers: authService.getAPITokenHeader()
-          }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
+          }).then(classModifySuccess, classModifyFailure);
       }
       else {
         //edit
         $http
           .put('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes/' + $scope.class.id, $scope.class, {
             headers: authService.getAPITokenHeader()
-          }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
+          }).then(classModifySuccess, classModifyFailure);
       }
     };
-
-    // TODO save edits fails 404?
 
     $scope.deleteClassBtnClick = function (idToDelete) {
       if (confirm("Are you sure you want to delete the class? This cannot be undone")) {
@@ -76,12 +74,11 @@ angular.module('app.class-list', ['ngRoute'])
         $http
           .delete('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes/' + idToDelete, {
             headers: authService.getAPITokenHeader()
-          }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
+          }).then(classModifySuccess, classModifyFailure);
       }
-
     };
 
-    function classAddEditDeleteSuccess(response) {
+    function classModifySuccess(response) {
       console.log('class ' + $scope.action + 'ed successfully');
       console.log(response);
       console.log($scope.class);
@@ -90,17 +87,15 @@ angular.module('app.class-list', ['ngRoute'])
         $scope.classes.push($scope.class);
       }
       else if ($scope.action == "Delete") {
-
         $scope.classes = $scope.classes.filter(function (item) {
           return item.id != $scope.class.id;
         });
-
       }
       else {
         // find class in model and replace with the updated one
         for (var c in $scope.classes) {
           if ($scope.classes.hasOwnProperty(c) && $scope.classes.id == c.id) {
-            c = $scope.class;
+            $scope.classes[c] = $scope.class;
             break;
           }
         }
@@ -109,7 +104,7 @@ angular.module('app.class-list', ['ngRoute'])
       showSuccessMsg();
     }
 
-    function classAddEditDeleteFailure(response) {
+    function classModifyFailure(response) {
       console.error(response);
       showFailMsg();
     }
