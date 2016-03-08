@@ -87,11 +87,9 @@ angular.module('app.class-list', ['ngRoute'])
         $scope.classes.push($scope.class);
       }
       else if ($scope.action == "Delete") {
-
         $scope.classes = $scope.classes.filter(function (item) {
           return item.id != $scope.class.id;
         });
-
       }
       else {
         // find class in model and replace with the updated one
