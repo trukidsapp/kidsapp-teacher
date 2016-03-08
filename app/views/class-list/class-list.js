@@ -68,12 +68,14 @@ angular.module('app.class-list', ['ngRoute'])
     // TODO save edits fails 404?
 
     $scope.deleteClassBtnClick = function (idToDelete) {
-      $scope.action = "Delete";
-      console.log('delete class ' + idToDelete);
-      $http
-        .delete('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes/' + idToDelete, {
-          headers: authService.getAPITokenHeader()
-        }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
+      if (confirm("Are you sure you want to delete the class? This cannot be undone")) {
+        $scope.action = "Delete";
+        console.log('delete class ' + idToDelete);
+        $http
+          .delete('http:' + envService.read('apiUrl') + '/teachers/' + authService.getTokenUser().username + '/classes/' + idToDelete, {
+            headers: authService.getAPITokenHeader()
+          }).then(classAddEditDeleteSuccess, classAddEditDeleteFailure);
+      }
 
     };
 
