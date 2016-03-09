@@ -15,7 +15,7 @@ angular.module('app', [
   envServiceProvider.config({
     domains: {
       development: ["localhost"],
-      production: ["kidsapp-api.herokuapp.com"]
+      production: ["24.70.42.226"]
     },
     vars: {
       development: {
