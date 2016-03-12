@@ -3,7 +3,7 @@ set -x
 if [ $TRAVIS_BRANCH == 'master' ] ; then
     git init
 
-    git remote add deploy "teamcity_user@24.70.42.226:~/remote/teacher"
+    git remote add deploy "ssh://teamcity_user@24.70.42.226:229:~/remote/teacher"
     git config user.name "Travis CI"
     git config user.email "travisCI@travisci.com"
 
