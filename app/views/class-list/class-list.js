@@ -11,11 +11,14 @@ angular.module('app.class-list', ['ngRoute'])
 
   .controller('ClassListController', ['$http', '$scope', '$location', 'authService', 'envService', function ($http, $scope, $location, authService, envService) {
     var teacherId = authService.getTokenUser().username;
+    getClasses();
 
-    $http
-      .get('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes', {
-        headers: authService.getAPITokenHeader()
-      }).then(classRetrieveSuccess, classRetrieveFailure);
+    function getClasses() {
+      $http
+        .get('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes', {
+          headers: authService.getAPITokenHeader()
+        }).then(classRetrieveSuccess, classRetrieveFailure);
+    }
 
     function classRetrieveSuccess(response) {
       //console.log(response);
@@ -101,6 +104,7 @@ angular.module('app.class-list', ['ngRoute'])
         }
       }
       $('#modifyClassModal').modal('hide');
+      getClasses()
       showSuccessMsg();
     }
 

@@ -62,7 +62,7 @@
 		<tr class="ng-scope" ng-show="!classes.length">
 			<td colspan="5">You have no classes</td>
 		</tr>
-		<tr class="clickable-row" ng-repeat="class in classes">
+		<tr class="clickable-row" ng-repeat="class in classes track by $index">
 			<td>{{class.className}}</td>
 			<td>{{class.grade}}</td>
 			<td>{{class.TeacherUsername}}</td>
@@ -71,8 +71,9 @@
 				</button>
 				<button type="button" class="btn btn-xs btn-default">Manage Students
 				</button>
-				<button type="button" class="btn btn-xs btn-default">Quizzes
+				<button type="button" class="btn btn-xs btn-default">Manage Game
 				</button>
+				<!-- for setting up which qiuzzes are part of the class' game-->
 			</td>
 
 		</tr>

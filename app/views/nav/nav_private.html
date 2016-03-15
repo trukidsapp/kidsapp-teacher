@@ -18,7 +18,10 @@
 				<!--add class active conditionally-->
 				<li ng-class="{ active: isActive('/home')}"><a href="#/home">Home</a></li>
 				<li ng-class="{ active: isActive('/classes')}"><a href="#/class-list">Classes</a></li>
+				<li ng-class="{ active: isActive('/quizzes')}"><a href="#/quizzes">Quizzes</a></li>
+				<!--For setting up quiz modules made up of questions-->
 				<li ng-class="{ active: isActive('/questions')}"><a href="#/question-list">Questions</a></li>
+				<!-- for setting up questions and answers -->
 				<li ng-click="logout()"><a href="#/logout">Log Out</a></li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
