@@ -123,4 +123,8 @@ angular.module('app.class-list', ['ngRoute'])
       }, 7000);
     }
 
+    $scope.manageStudents = function (classId) {
+      $location.path("/students/" + classId);
+    };
+
   }]);
