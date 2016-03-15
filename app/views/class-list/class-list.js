@@ -17,10 +17,10 @@ angular.module('app.class-list', ['ngRoute'])
       $http
         .get('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes', {
           headers: authService.getAPITokenHeader()
-        }).then(classRetrieveSuccess, classRetrieveFailure);
+        }).then(classesRetrieveSuccess, classRetrieveFailure);
     }
 
-    function classRetrieveSuccess(response) {
+    function classesRetrieveSuccess(response) {
       //console.log(response);
       $scope.classes = response.data;
     }
@@ -44,7 +44,7 @@ angular.module('app.class-list', ['ngRoute'])
     $scope.editClassBtnClick = function (toEdit) {
       console.log('edit class ' + toEdit.id);
       // ensure editing a copy of the object so model in view behind modal doesn't update until save
-      $scope.class = JSON.parse(JSON.stringify(toEdit)); // TODO this is a hack, better way?
+      $scope.class = angular.copy(toEdit);
       console.log($scope.class);
       $scope.action = "Edit";
       $('#modifyClassModal').modal('show');
@@ -84,27 +84,10 @@ angular.module('app.class-list', ['ngRoute'])
     function classModifySuccess(response) {
       console.log('class ' + $scope.action + 'ed successfully');
       console.log(response);
-      console.log($scope.class);
 
-      if ($scope.action == "Add") {
-        $scope.classes.push($scope.class);
-      }
-      else if ($scope.action == "Delete") {
-        $scope.classes = $scope.classes.filter(function (item) {
-          return item.id != $scope.class.id;
-        });
-      }
-      else {
-        // find class in model and replace with the updated one
-        for (var c in $scope.classes) {
-          if ($scope.classes.hasOwnProperty(c) && $scope.classes.id == c.id) {
-            $scope.classes[c] = $scope.class;
-            break;
-          }
-        }
-      }
       $('#modifyClassModal').modal('hide');
-      getClasses()
+
+      getClasses();
       showSuccessMsg();
     }
 
