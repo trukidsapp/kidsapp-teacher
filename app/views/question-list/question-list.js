@@ -10,25 +10,28 @@ angular.module('app.question-list', ['ngRoute'])
   }])
 
   .controller('QuestionListController', ['$http', '$scope', '$location', 'authService', 'envService', function ($http, $scope, $location, authService, envService) {
+
     var teacherId = authService.getTokenUser().username;
+    getQuestions();
 
-    $http
-      .get('http:' + envService.read('apiUrl') + '/questions', {
-        headers: authService.getAPITokenHeader()
-      })
-      .then(function (response) {
-        $scope.questions = response.data;
-      })
-      .catch(function (response) {
-        if (response.status == 404) {
-          console.log('no classes found');
-          $scope.classes = [];
-        }
-        else {
-          console.log('failed' + response.status);
-        }
-      });
-
+    function getQuestions() {
+      $http
+        .get('http:' + envService.read('apiUrl') + '/questions', {
+          headers: authService.getAPITokenHeader()
+        })
+        .then(function (response) {
+          $scope.questions = response.data;
+        })
+        .catch(function (response) {
+          if (response.status == 404) {
+            console.log('no classes found');
+            $scope.classes = [];
+          }
+          else {
+            console.log('failed' + response.status);
+          }
+        });
+    }
 
     $scope.addQuestionBtnClick = function () {
       $scope.action = 'Add';
@@ -49,10 +52,10 @@ angular.module('app.question-list', ['ngRoute'])
     };
 
     $scope.editQuestionBtnClick = function (toEdit) {
-      console.log('edit question ' + toEdit);
+     // console.log('edit question ' + toEdit);
       // ensure editing a copy of the object so model in view behind modal doesn't update until save
-      $scope.question = JSON.parse(JSON.stringify(toEdit)); // TODO this is a hack, better way?
-      console.log($scope.question);
+      $scope.question = angular.copy(toEdit);
+     // console.log($scope.question);
       $scope.action = "Edit";
       $('#modifyQuestionModal').modal('show');
     };
@@ -78,30 +81,9 @@ angular.module('app.question-list', ['ngRoute'])
     };
 
     function questionModifySuccess(response) {
-      console.log('question ' + $scope.action + 'ed successfully');
       console.log(response);
-      console.log($scope.question);
-
-      if ($scope.action == "Add") {
-        $scope.questions.push($scope.question);
-      }
-      else if ($scope.action == "Delete") {
-
-        $scope.questions = $scope.questions.filter(function (item) {
-          return item.id != $scope.question.id;
-        });
-
-      }
-      else {
-        // find question in model and replace with the updated one
-        for (var q in $scope.questions) {
-          if ($scope.questions.hasOwnProperty(q) && $scope.questions.id == q.id) {
-            $scope.questions[q] = $scope.question;
-            break;
-          }
-        }
-      }
       $('#modifyQuestionModal').modal('hide');
+      getQuestions();
       showSuccessMsg();
     }
 

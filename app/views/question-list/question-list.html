@@ -32,21 +32,25 @@
 								</div>
 								<div class="form-group">
 									<label for="subject">Subject</label>
-									<input ng-model="question.subject" id="subject" type="text" ng-minlength="1"
+									<input ng-model="question.subject" id="subject" type="text" ng-minlength="1" ng-required="true"
 									       class="form-control"/>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="difficulty">Difficulty Label</label>
-									<input ng-model="question.difficulty" type="text" minlength="1" id="difficulty"
-									       class="form-control"/>
+									<select ng-model="question.difficulty" id="difficulty"
+									        class="form-control" ng-required="true">
+										<option value="Easy">Easy</option>
+										<option value="Easy">Medium</option>
+										<option value="Easy">Hard</option>
+									</select>
 								</div>
 							</div>
 
 							<div class="col-md-12 form-group">
 								<label for="text">Question Text</label>
-								<textarea id="text" ng-model="question.text" class="form-control" ng-minlength="1"
+								<textarea id="text" ng-model="question.text" class="form-control" ng-minlength="1" ng-required="true"
 								          rows="4"></textarea>
 							</div>
 							<div class="col-md-12 form-group">
