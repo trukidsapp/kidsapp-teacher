@@ -54,31 +54,34 @@ angular.module('app.students', ['ngRoute'])
         }
 
         function fail(response) {
+          if (response.status == 404) {
+            $scope.students = {};
+          }
           console.log(response.data);
           console.log('retrieved fail');
         }
       }
 
 
-      $scope.addStudentBtnClick = function() {
+      $scope.addStudentBtnClick = function () {
         $scope.action = 'Add';
         $('#modifyStudentModal').modal('show');
         $scope.student = {};
-      }
+      };
 
-      $scope.editStudentBtnClick = function(toEdit) {
-        console.log('edit student ' + toEdit.username);
+      $scope.editStudentBtnClick = function (toEdit) {
+        //console.log('edit student ' + toEdit.username);
         // ensure editing a copy of the object so model in view behind modal doesn't update until save
-        $scope.student = JSON.parse(JSON.stringify(toEdit)); // TODO this is a hack, better way?
-        console.log($scope.student);
+        $scope.student = angular.copy(toEdit);
+        //console.log($scope.student);
         $scope.action = "Edit";
         $('#modifyStudentModal').modal('show');
-      }
+      };
 
       $scope.modifyStudentDoneBtnClick = function () {
         console.log($scope.action + ' done click');
         console.log($scope.student);
-       // $scope.class.TeacherUsername = teacherId;
+        // $scope.class.TeacherUsername = teacherId;
         if ($scope.action == 'Add') {
           //add
           $http
@@ -93,7 +96,7 @@ angular.module('app.students', ['ngRoute'])
               headers: authService.getAPITokenHeader()
             }).then(studentModifySuccess, studentModifyFailure);
         }
-      }
+      };
 
       function studentModifyFailure(response) {
         console.error(response);
@@ -101,41 +104,25 @@ angular.module('app.students', ['ngRoute'])
       }
 
       function studentModifySuccess(response) {
-        console.log('student ' + $scope.action + 'ed successfully');
-        console.log(response);
-        console.log($scope.student);
+        // console.log('student ' + $scope.action + 'ed successfully');
+        //console.log(response);
+        //console.log($scope.student);
 
-        if ($scope.action == "Add") {
-          $scope.students.push($scope.student);
-        }
-        else if ($scope.action == "Delete") {
-          $scope.students = $scope.students.filter(function (item) {
-            return item.username != $scope.student.username;
-          });
-        }
-        else {
-          // find student in model and replace with the updated one
-          for (var s in $scope.students) {
-            if ($scope.students.hasOwnProperty(c) && $scope.students.username == s.username) {
-              $scope.students[s] = $scope.student;
-              break;
-            }
-          }
-        }
+        getStudents();
         $('#modifyStudentModal').modal('hide');
         showSuccessMsg();
       }
 
-      $scope.deleteStudentBtnClick = function(idToDelete) {
+      $scope.deleteStudentBtnClick = function (idToDelete) {
         if (confirm("Are you sure you want to delete the student? This cannot be undone")) {
           $scope.action = "Delete";
-          console.log('delete student ' + idToDelete);
+          //   console.log('delete student ' + idToDelete);
           $http
             .delete('http:' + envService.read('apiUrl') + '/classes/' + classId + '/students/' + idToDelete, {
               headers: authService.getAPITokenHeader()
             }).then(studentModifySuccess, studentModifyFailure);
         }
-      }
+      };
 
       function showSuccessMsg() {
         $('#updateSuccessAlert').show();
@@ -149,6 +136,10 @@ angular.module('app.students', ['ngRoute'])
         setTimeout(function () {
           $('#updateFailAlert').fadeOut();
         }, 7000);
+      }
+
+      $scope.backBtnClick = function () {
+        $location.path('/class-list');
       }
 
     }]);
