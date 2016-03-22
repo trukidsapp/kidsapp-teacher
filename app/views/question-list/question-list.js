@@ -80,6 +80,10 @@ angular.module('app.question-list', ['ngRoute'])
       }
     };
 
+    $scope.manageAnswersBtnClick = function (questionId) {
+      $location.path('/answers/' + questionId);
+    };
+    
     function questionModifySuccess(response) {
       console.log(response);
       $('#modifyQuestionModal').modal('hide');

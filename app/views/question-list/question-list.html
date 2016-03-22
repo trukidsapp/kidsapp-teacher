@@ -59,8 +59,6 @@
 								<textarea id="hint" ng-model="question.hint" class="form-control" rows="2"></textarea>
 							</div>
 
-							<!--TODO answers-->
-
 						</div>
 						<div class="modal-footer">
 							<button type="button" ng-show="action == 'Edit'" class="btn btn-danger pull-left"
@@ -105,7 +103,8 @@
 			<td>
 				<button type="button" class="btn btn-xs btn-default" ng-click="editQuestionBtnClick(question)">Edit
 				</button>
-				<button type="button" class="btn btn-xs btn-default" ng-click="">Manage Answers
+				<button type="button" class="btn btn-xs btn-default" ng-click="manageAnswersBtnClick(question.id)">
+					Manage Answers
 				</button>
 			</td>
 
