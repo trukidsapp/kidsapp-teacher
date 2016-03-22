@@ -9,37 +9,37 @@
     </div>
 
     <!--Add/Edit/Delete Class Modal-->
-    <div class="modal fade" id="modifyClassModal" tabindex="-1" role="dialog" aria-labelledby="modifyClassModalLabel">
+    <div class="modal fade" id="modifyQuizModal" tabindex="-1" role="dialog" aria-labelledby="modifyQuizModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form name="addClassForm" novalidate>
+                <form name="addQuizForm" novalidate>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="modifyClassModalLabel">{{action}} Class</h4>
+                        <h4 class="modal-title" id="modifyQuizModalLabel">{{action}} Quiz</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Class Name</label>
-                                    <input ng-model="class.className" type="text" minlength="1" id="name"
+                                    <label for="name">Quiz Name</label>
+                                    <input ng-model="quiz.quizName" type="text" minlength="1" id="name"
                                            class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="grade">Grade</label>
-                                    <input ng-model="class.grade" id="grade" type="number" ng-required="true"
+                                    <label for="grade">Grade Level</label>
+                                    <input ng-model="quiz.gradeLevel" id="grade" type="number" ng-required="true"
                                            class="form-control"/>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" ng-show="action == 'Edit'" class="btn btn-danger pull-left"
-                                    ng-click="deleteClassBtnClick(class.id)">Delete
+                                    ng-click="deleteQuizBtnClick(quiz.id)">Delete
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" ng-disabled="addClassForm.$invalid" class="btn btn-default"
-                                    ng-click="modifyClassDoneBtnClick()">Save
+                            <button type="submit" ng-disabled="addQuizForm.$invalid" class="btn btn-default"
+                                    ng-click="modifyQuizDoneBtnClick()">Save
                             </button>
                         </div>
 

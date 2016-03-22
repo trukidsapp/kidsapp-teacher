@@ -34,4 +34,61 @@ angular.module('app.quiz-list', ['ngRoute'])
         console.log('failed' + response.status);
       }
     }
+
+    $scope.addQuizBtnClick= function () {
+      $scope.action = 'Add';
+      $('#modifyQuizModal').modal('show');
+      $scope.quiz = {};
+    };
+
+    $scope.modifyQuizDoneBtnClick = function () {
+      console.log($scope.action + ' done click');
+      console.log($scope.quiz);
+      $scope.quiz.TeacherUsername = teacherId;
+      if ($scope.action == 'Add') {
+        //add
+        // localhost:8080/api/quizzes/
+        $http
+          .post('http:' + envService.read('apiUrl') + '/quizzes/', $scope.quiz, {
+            headers: authService.getAPITokenHeader()
+          }).then(quizModifySuccess, quizModifyFailure);
+      }
+      else {
+        //edit
+        $http
+          .put('http:' + envService.read('apiUrl') + '/quizzes/' + $scope.quiz.id, $scope.quiz, {
+            headers: authService.getAPITokenHeader()
+          }).then(quizModifySuccess, quizModifyFailure);
+      }
+    };
+
+    function quizModifySuccess(response) {
+      console.log('quiz ' + $scope.action + 'ed successfully');
+      console.log(response);
+
+      $('#modifyQuizModal').modal('hide');
+
+      getQuizzes();
+      showSuccessMsg();
+    }
+
+    function quizModifyFailure(response) {
+      console.error(response);
+      showFailMsg();
+    }
+
+    function showSuccessMsg() {
+      $('#updateSuccessAlert').show();
+      setTimeout(function () {
+        $('#updateSuccessAlert').fadeOut();
+      }, 7000);
+    }
+
+    function showFailMsg() {
+      $('#updateFailAlert').show();
+      setTimeout(function () {
+        $('#updateFailAlert').fadeOut();
+      }, 7000);
+    }
+
   }]);
