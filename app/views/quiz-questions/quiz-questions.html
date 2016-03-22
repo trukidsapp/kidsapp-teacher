@@ -17,8 +17,10 @@
 
 
     <div ng-repeat="list in models.lists">
-        <ul dnd-list="list">
+	    <div class="col-md-6">
+		    <ul dnd-list="list" class="list-group">
             <li ng-repeat="question in list"
+                class="list-group-item"
                 dnd-draggable="question"
                 dnd-moved="list.splice($index, 1)"
                 dnd-effect-allowed="move"
@@ -28,75 +30,6 @@
                 {{question.text}}
             </li>
         </ul>
+	    </div>
     </div>
-
-    <!--
-    <ul dnd-list="questions">
-        <li ng-repeat="question in questions"
-        dnd-draggable="question"
-        dnd-moved="questions.splice($index, 1)"
-        dnd-effect-allowed="move"
-        dnd-selected="models.selected = question"
-        ng-class="{'selected': models.selected === question}"
-        >
-        {{question.text}}
-        </li>
-    </ul>-->
-
-<!--
-    <table class="table table-striped table-hover">
-        <tr>
-            <th>Subject</th>
-            <th>Difficulty</th>
-            <th>Type</th>
-            <th>Text</th>
-            <th>Has hint</th>
-            <th></th>
-        </tr>
-        <tr class="ng-scope" ng-show="!questions.length">
-            <td colspan="5">No students in class</td>
-        </tr>
-        <tr class="clickable-row" ng-repeat="question in questions">
-            <td>{{question.subject}}</td>
-            <td>{{question.difficulty}}</td>
-            <td>{{question.type}}</td>
-            <td>{{question.text}}</td>
-            <td>
-                <span ng-show="question.hint">Yes</span>
-                <span ng-show="!question.hint">No</span></td>
-            <td>
-                <button type="button" class="btn btn-xs btn-default" ng-click="editStudentBtnClick(student)">Edit
-                </button>
-            </td>
-
-        </tr>
-    </table>
-    <br>
-    <table class="table table-striped table-hover">
-        <tr>
-            <th>Subject</th>
-            <th>Difficulty</th>
-            <th>Type</th>
-            <th>Text</th>
-            <th>Has hint</th>
-            <th></th>
-        </tr>
-        <tr class="ng-scope" ng-show="!allQuestions.length">
-            <td colspan="5">No students in class</td>
-        </tr>
-        <tr class="clickable-row" ng-repeat="question in allQuestions">
-            <!--<td>{{question.subject}}</td>
-            <td>{{question.difficulty}}</td>
-            <td>{{question.type}}</td>
-            <td>{{question.text}}</td>
-            <!--<td>
-                <span ng-show="question.hint">Yes</span>
-                <span ng-show="!question.hint">No</span></td>
-            <td>
-                <button type="button" class="btn btn-xs btn-default" ng-click="editStudentBtnClick(student)">Edit
-                </button>
-            </td>
-        </tr>
-    </table>
-    -->
 </div>
