@@ -32,3 +32,8 @@
 .btn-vertical-space {
 	margin-bottom: 5px;
 }
+
+/*Quiz questions styles */
+.column-heading {
+	display: inline;
+}
