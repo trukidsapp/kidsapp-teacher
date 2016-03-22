@@ -9,7 +9,14 @@ angular.module('app.class-list', ['ngRoute'])
     });
   }])
 
-  .controller('ClassListController', ['$http', '$scope', '$location', 'authService', 'envService', function ($http, $scope, $location, authService, envService) {
+  .controller('ClassListController',
+    [
+      '$http',
+      '$scope',
+      '$location',
+      'authService',
+      'envService',
+      function ($http, $scope, $location, authService, envService) {
     var teacherId = authService.getTokenUser().username;
     getClasses();
 

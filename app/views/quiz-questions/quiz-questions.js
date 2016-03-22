@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('app.students', ['ngRoute'])
+angular.module('app.quiz-questions', ['ngRoute'])
 
   .config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/students/:classId', {
-      templateUrl: 'views/students/students.html',
-      controller: 'StudentsController'
+    $routeProvider.when('/quiz-questions/:quizId', {
+      templateUrl: 'views/quiz-questions/quiz-questions.html',
+      controller: 'QuizQuestionsController'
     });
   }])
 
-  .controller('StudentsController', [
+  .controller('QuizQuestionsController', [
     '$routeParams',
     '$location',
     '$scope',
@@ -17,22 +17,20 @@ angular.module('app.students', ['ngRoute'])
     'authService',
     'envService',
     function ($routeParams, $location, $scope, $http, authService, envService) {
-
       var teacherId = authService.getTokenUser().username;
-      var classId = $routeParams.classId;
+      var quizId = $routeParams.quizId;
 
-      getEvaluation();
-      getStudents();
+      getQuiz();
+      getQuestions();
 
-      // TODO: rename to getClasses.
-      function getEvaluation() {
-        $http
-          .get('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes/' + classId, {
+      function getQuiz() {
+        $http // '/quizzes/:quizId/questions/:questionId'
+          .get('http:' + envService.read('apiUrl') + '/quizzes/' + quizId, {
             headers: authService.getAPITokenHeader()
           }).then(success, fail);
 
         function success(response) {
-          $scope.class = response.data;
+          $scope.quiz = response.data;
           console.log('retrieved successfully');
         }
 
@@ -42,28 +40,29 @@ angular.module('app.students', ['ngRoute'])
         }
       }
 
-      function getStudents() {
+      // quizzes/5/questions
+      function getQuestions() {
         $http
-          .get('http:' + envService.read('apiUrl') + '/classes/' + classId + '/students', {
+          .get('http:' + envService.read('apiUrl') + '/quizzes/' + quizId + '/questions', {
             headers: authService.getAPITokenHeader()
           }).then(success, fail);
 
         function success(response) {
-          $scope.students = response.data;
+          $scope.questions = response.data;
           console.log(response);
           console.log('retrieved successfully');
         }
 
         function fail(response) {
           if (response.status == 404) {
-            $scope.students = {};
+            $scope.questions = {};
           }
           console.log(response.data);
           console.log('retrieved fail');
         }
       }
 
-
+      /*
       $scope.addStudentBtnClick = function () {
         $scope.action = 'Add';
         $('#modifyStudentModal').modal('show');
@@ -86,14 +85,14 @@ angular.module('app.students', ['ngRoute'])
         if ($scope.action == 'Add') {
           //add
           $http
-            .post('http:' + envService.read('apiUrl') + '/classes/' + classId + '/students', $scope.student, {
+            .post('http:' + envService.read('apiUrl') + '/classes/' + classId + '/questions', $scope.student, {
               headers: authService.getAPITokenHeader()
             }).then(studentModifySuccess, studentModifyFailure);
         }
         else {
           //edit
           $http
-            .put('http:' + envService.read('apiUrl') + '/classes/' + classId + '/students/' + $scope.student.username, $scope.student, {
+            .put('http:' + envService.read('apiUrl') + '/classes/' + classId + '/questions/' + $scope.student.username, $scope.student, {
               headers: authService.getAPITokenHeader()
             }).then(studentModifySuccess, studentModifyFailure);
         }
@@ -109,7 +108,7 @@ angular.module('app.students', ['ngRoute'])
         //console.log(response);
         //console.log($scope.student);
 
-        getStudents();
+        getQuestions();
         $('#modifyStudentModal').modal('hide');
         showSuccessMsg();
       }
@@ -119,7 +118,7 @@ angular.module('app.students', ['ngRoute'])
           $scope.action = "Delete";
           //   console.log('delete student ' + idToDelete);
           $http
-            .delete('http:' + envService.read('apiUrl') + '/classes/' + classId + '/students/' + idToDelete, {
+            .delete('http:' + envService.read('apiUrl') + '/classes/' + classId + '/questions/' + idToDelete, {
               headers: authService.getAPITokenHeader()
             }).then(studentModifySuccess, studentModifyFailure);
         }
@@ -138,9 +137,9 @@ angular.module('app.students', ['ngRoute'])
           $('#updateFailAlert').fadeOut();
         }, 7000);
       }
-
+      */
       $scope.backBtnClick = function () {
-        $location.path('/class-list');
+        $location.path('/quiz-list');
       }
 
     }]);

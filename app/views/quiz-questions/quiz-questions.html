@@ -1,0 +1,37 @@
+<div class="container">
+    <div id="updateSuccessAlert" class="alert alert-success" style="display: none;">
+        <strong>Update Successful</strong> Your changes were saved successfully.
+    </div>
+
+    <div id="updateFailAlert" class="alert alert-danger" style="display: none;">
+        <strong>Update Failed</strong> A problem occurred while saving your changes.
+    </div>
+
+    <h2>Questions in {{quiz.quizName}}</h2>
+    <h5>Grade {{quiz.gradeLevel}}</h5>
+
+    <button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="backBtnClick()">Back</button>
+    <button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="addStudentBtnClick()">Add Student
+    </button>
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Username</th>
+            <th>Options</th>
+        </tr>
+        <tr class="ng-scope" ng-show="!students.length">
+            <td colspan="5">No students in class</td>
+        </tr>
+        <tr class="clickable-row" ng-repeat="student in students">
+            <td>{{student.lastName}}</td>
+            <td>{{student.firstName}}</td>
+            <td>{{student.username}}</td>
+            <td>
+                <button type="button" class="btn btn-xs btn-default" ng-click="editStudentBtnClick(student)">Edit
+                </button>
+            </td>
+
+        </tr>
+    </table>
+</div>

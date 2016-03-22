@@ -41,6 +41,15 @@ angular.module('app.quiz-list', ['ngRoute'])
       $scope.quiz = {};
     };
 
+    $scope.editQuizBtnClick = function (toEdit) {
+      console.log('edit quiz ' + toEdit.id);
+      // ensure editing a copy of the object so model in view behind modal doesn't update until save
+      $scope.quiz = angular.copy(toEdit);
+      console.log($scope.quiz);
+      $scope.action = "Edit";
+      $('#modifyQuizModal').modal('show');
+    };
+
     $scope.modifyQuizDoneBtnClick = function () {
       console.log($scope.action + ' done click');
       console.log($scope.quiz);
@@ -57,6 +66,17 @@ angular.module('app.quiz-list', ['ngRoute'])
         //edit
         $http
           .put('http:' + envService.read('apiUrl') + '/quizzes/' + $scope.quiz.id, $scope.quiz, {
+            headers: authService.getAPITokenHeader()
+          }).then(quizModifySuccess, quizModifyFailure);
+      }
+    };
+
+    $scope.deleteQuizBtnClick = function (idToDelete) {
+      if (confirm("Are you sure you want to delete the quiz? This cannot be undone")) {
+        $scope.action = "Delete";
+        console.log('delete quiz ' + idToDelete);
+        $http
+          .delete('http:' + envService.read('apiUrl') + '/quizzes/' + idToDelete, {
             headers: authService.getAPITokenHeader()
           }).then(quizModifySuccess, quizModifyFailure);
       }
@@ -90,5 +110,10 @@ angular.module('app.quiz-list', ['ngRoute'])
         $('#updateFailAlert').fadeOut();
       }, 7000);
     }
+
+    $scope.manageQuestions = function (quizId) {
+      console.log("QuizId: " + quizId);
+      $location.path("/quiz-questions/" + quizId);
+    };
 
   }]);

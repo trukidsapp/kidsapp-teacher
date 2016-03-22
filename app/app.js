@@ -9,6 +9,7 @@ angular.module('app', [
   'app.class-list',
   'app.quiz-list',
   'app.question-list',
+  'app.quiz-questions',
   'app.students'
 
 ]).config(['$routeProvider', 'envServiceProvider', function ($routeProvider, envServiceProvider) {
