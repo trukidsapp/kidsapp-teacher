@@ -8,6 +8,7 @@ angular.module('app', [
   'app.login',
   'app.class-list',
   'app.question-list',
+  'app.answers',
   'app.students'
 
 ]).config(['$routeProvider', 'envServiceProvider', function ($routeProvider, envServiceProvider) {
