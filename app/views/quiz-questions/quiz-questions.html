@@ -7,18 +7,17 @@
         <strong>Update Failed</strong> A problem occurred while saving your changes.
     </div>
 
-    <h2>Questions in {{quiz.quizName}}</h2>
-    <h5>Grade {{quiz.gradeLevel}}</h5>
 
-    <button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="backBtnClick()">Back</button>
-    <button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="addStudentBtnClick()">Add Question
-    </button>
-
-
+	<h2>Choose Questions For Quiz</h2>
+	<h5>Quiz Name: {{quiz.quizName}}</h5>
+	<h5>Grade: {{quiz.gradeLevel}}</h5>
+	<button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="backBtnClick()">Back</button>
+	</button>
 
     <div ng-repeat="list in models.lists">
-	    <h2>{{listHeadings[$index]}}</h2>
+
 	    <div class="col-md-6">
+		    <h2 style="display: inline">{{listHeadings[$index]}}</h2>
 		    <ul dnd-list="list" class="list-group">
             <li ng-repeat="question in list"
                 class="list-group-item"
