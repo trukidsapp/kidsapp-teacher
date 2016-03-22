@@ -27,10 +27,12 @@ angular.module('app.quiz-questions', ['ngRoute'])
       $scope.models = {
         selected: null,
         lists: {
-          "availableQuestions" : $scope.allQuestions,
-          "currentQuestions" : $scope.questions
+          "currentQuestions": $scope.questions,
+          "availableQuestions": $scope.allQuestions
         }
       };
+
+      $scope.listHeadings = ["Questions In Quiz", "Available Questions"];
 
 
 

@@ -17,6 +17,7 @@
 
 
     <div ng-repeat="list in models.lists">
+	    <h2>{{listHeadings[$index]}}</h2>
 	    <div class="col-md-6">
 		    <ul dnd-list="list" class="list-group">
             <li ng-repeat="question in list"
