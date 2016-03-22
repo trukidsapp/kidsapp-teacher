@@ -22,6 +22,15 @@ angular.module('app.quiz-questions', ['ngRoute'])
 
       getQuiz();
       getQuestions();
+      getAllQuestions();
+
+      $scope.models = {
+        selected: null,
+        lists: {
+          "availableQuestions" : $scope.allQuestions,
+          "currentQuestions" : $scope.questions
+        }
+      };
 
       function getQuiz() {
         $http // '/quizzes/:quizId/questions/:questionId'
@@ -35,6 +44,27 @@ angular.module('app.quiz-questions', ['ngRoute'])
         }
 
         function fail(response) {
+          console.log(response.data);
+          console.log('retrieved fail');
+        }
+      }
+
+      function getAllQuestions(){
+        $http
+          .get('http:' + envService.read('apiUrl') + '/questions/', {
+            headers: authService.getAPITokenHeader()
+          }).then(success, fail);
+
+        function success(response) {
+          $scope.allQuestions = response.data;
+          console.log(response);
+          console.log('retrieved successfully');
+        }
+
+        function fail(response) {
+          if (response.status == 404) {
+            $scope.allQuestions = {};
+          }
           console.log(response.data);
           console.log('retrieved fail');
         }
