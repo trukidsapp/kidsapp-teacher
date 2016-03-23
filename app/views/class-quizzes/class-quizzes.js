@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('app.quiz-questions', ['ngRoute'])
+angular.module('app.class-quizzes', ['ngRoute'])
 
   .config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/quiz-questions/:quizId', {
-      templateUrl: 'views/quiz-questions/quiz-questions.html',
-      controller: 'QuizQuestionsController'
+    $routeProvider.when('/class-quizzes/:classId', {
+      templateUrl: 'views/class-quizzes/class-quizzes.html',
+      controller: 'ClassQuizzesController'
     });
   }])
 
-  .controller('QuizQuestionsController', [
+  .controller('ClassQuizzesController', [
     '$routeParams',
     '$location',
     '$scope',
@@ -18,32 +18,32 @@ angular.module('app.quiz-questions', ['ngRoute'])
     'envService',
     function ($routeParams, $location, $scope, $http, authService, envService) {
       var teacherId = authService.getTokenUser().username;
-      var quizId = $routeParams.quizId;
+      var classId = $routeParams.classId;
 
-      getQuiz();
-      getQuestions();
-      getAllQuestions();
+      getClass();
+      getQuizzes();
+      getAllQuizzes();
 
       $scope.models = {
         selected: null,
         lists: {
-          "currentQuestions": $scope.questions,
-          "availableQuestions": $scope.allQuestions
+          "currentQuizzes": $scope.quizzes,
+          "availableQuizzes": $scope.allQuizzes
         }
       };
 
-      $scope.listHeadings = ["Questions In Quiz", "Available Questions"];
+      $scope.listHeadings = ["Quizzes Assigned to Class", "Available Quizzes"];
 
 
 
-      function getQuiz() {
+      function getClass() {
         $http
-          .get('http:' + envService.read('apiUrl') + '/quizzes/' + quizId, {
+          .get('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes/' + classId, {
             headers: authService.getAPITokenHeader()
           }).then(success, fail);
 
         function success(response) {
-          $scope.quiz = response.data;
+          $scope.class = response.data;
           console.log('retrieved successfully');
         }
 
@@ -53,46 +53,43 @@ angular.module('app.quiz-questions', ['ngRoute'])
         }
       }
 
-      function getAllQuestions(){
+      function getAllQuizzes(){
         $http
-          .get('http:' + envService.read('apiUrl') + '/questions/', {
+          .get('http:' + envService.read('apiUrl') + '/quizzes/', {
             headers: authService.getAPITokenHeader()
           }).then(success, fail);
 
         function success(response) {
-          $scope.allQuestions = response.data;
+          $scope.allQuizzes = response.data;
           console.log(response);
-          console.log('retrieved successfully');
-          $scope.models.lists.availableQuestions = $scope.allQuestions;
-          console.log($scope.models.lists);
-          console.log($scope.models.availableQuestions.length);
+          $scope.models.lists.availableQuizzes = $scope.allQuizzes;
         }
 
         function fail(response) {
           if (response.status == 404) {
-            $scope.allQuestions = {};
+            $scope.allQuizzes = {};
           }
           console.log(response.data);
           console.log('retrieved fail');
         }
       }
 
-      function getQuestions() {
+      function getQuizzes() {
         $http
-          .get('http:' + envService.read('apiUrl') + '/quizzes/' + quizId + '/questions', {
+          .get('http:' + envService.read('apiUrl') + '/classes/' + classId + '/quizzes', {
             headers: authService.getAPITokenHeader()
           }).then(success, fail);
 
         function success(response) {
-          $scope.questions = response.data;
+          $scope.quizzes = response.data;
           console.log(response);
           console.log('retrieved successfully');
-          $scope.models.lists.currentQuestions = $scope.questions;
+          $scope.models.lists.currentQuizzes = $scope.quizzes;
         }
 
         function fail(response) {
           if (response.status == 404) {
-            $scope.questions = {};
+            $scope.quizzes = {};
           }
           console.log(response.data);
           console.log('retrieved fail');
@@ -100,7 +97,7 @@ angular.module('app.quiz-questions', ['ngRoute'])
       }
 
       $scope.backBtnClick = function () {
-        $location.path('/quiz-list');
+        $location.path('/class-list');
       }
 
     }]);
