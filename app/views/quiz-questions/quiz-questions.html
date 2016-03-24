@@ -14,22 +14,22 @@
 	<button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="backBtnClick()">Back</button>
 	</button>
 
-    <div ng-repeat="list in models.lists">
-
+    <div class ="" ng-repeat="list in models.lists">
 	    <div class="col-md-6">
 		    <h4 class="column-heading">{{listHeadings[$index]}}</h4>
-		    <ul dnd-list="list" class="list-group">
-            <li ng-repeat="question in list"
-                class="list-group-item"
-                dnd-draggable="question"
-                dnd-moved="list.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="models.selected = question"
-                ng-class="{'selected': models.selected === question}"
-            >
-                {{question.text}}
-            </li>
-        </ul>
+                <ul dnd-list="list" class="panel panel-default list-group panel-ul">
+                    <li ng-repeat="question in list"
+                        class="list-group-item
+                        list-group-item-success"
+                        dnd-draggable="question"
+                        dnd-moved="list.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="models.selected = question"
+                        ng-class="{'selected': models.selected === question}"
+                    >
+                        {{question.text}}
+                    </li>
+                </ul>
 	    </div>
     </div>
 </div>
