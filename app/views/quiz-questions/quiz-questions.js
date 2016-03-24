@@ -61,11 +61,7 @@ angular.module('app.quiz-questions', ['ngRoute'])
 
         function success(response) {
           $scope.allQuestions = response.data;
-          console.log(response);
-          console.log('retrieved successfully');
           $scope.models.lists.availableQuestions = $scope.allQuestions;
-          console.log($scope.models.lists);
-          console.log($scope.models.availableQuestions.length);
         }
 
         function fail(response) {

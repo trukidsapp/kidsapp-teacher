@@ -37,3 +37,7 @@
 .column-heading {
 	display: inline;
 }
+
+.panel-ul{
+	padding: 15px;
+}
