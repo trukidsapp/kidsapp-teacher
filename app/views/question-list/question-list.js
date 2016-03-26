@@ -11,6 +11,8 @@ angular.module('app.question-list', ['ngRoute'])
 
   .controller('QuestionListController', ['$http', '$scope', '$location', 'authService', 'envService', function ($http, $scope, $location, authService, envService) {
 
+    $scope.searchQuestions = '';
+    
     var teacherId = authService.getTokenUser().username;
     getQuestions();
 

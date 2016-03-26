@@ -50,8 +50,22 @@
 	</div>
 
 	<h2>Class List</h2>
-	<button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="addClassBtnClick()">Add Class
-	</button>
+	<div class="row">
+		<div class="col-md-4">
+			<button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="addClassBtnClick()">Add
+				Class
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="input-group list-search">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-search" id="seachicon"></span> </span>
+				<input type="text" class="form-control" placeholder="Class Name" aria-describedby="searchicon"
+				       ng-model="searchClasses">
+			</div>
+		</div>
+	</div>
 	<table class="table table-striped table-hover">
 		<tr>
 			<th>Class Name</th>
@@ -62,7 +76,7 @@
 		<tr class="ng-scope" ng-show="!classes.length">
 			<td colspan="5">You have no classes</td>
 		</tr>
-		<tr class="clickable-row" ng-repeat="class in classes | orderBy:'className'">
+		<tr class="clickable-row" ng-repeat="class in classes | orderBy:'className' | filter:searchClasses">
 			<td>{{class.className}}</td>
 			<td>{{class.grade}}</td>
 			<td>{{class.TeacherUsername}}</td>
