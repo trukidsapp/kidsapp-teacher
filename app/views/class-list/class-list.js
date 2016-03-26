@@ -17,6 +17,9 @@ angular.module('app.class-list', ['ngRoute'])
       'authService',
       'envService',
       function ($http, $scope, $location, authService, envService) {
+
+        $scope.searchClasses = '';
+        
     var teacherId = authService.getTokenUser().username;
     getClasses();
 
