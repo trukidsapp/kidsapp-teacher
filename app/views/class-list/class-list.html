@@ -62,7 +62,7 @@
 		<tr class="ng-scope" ng-show="!classes.length">
 			<td colspan="5">You have no classes</td>
 		</tr>
-		<tr class="clickable-row" ng-repeat="class in classes track by $index">
+		<tr class="clickable-row" ng-repeat="class in classes | orderBy:'className'">
 			<td>{{class.className}}</td>
 			<td>{{class.grade}}</td>
 			<td>{{class.TeacherUsername}}</td>
