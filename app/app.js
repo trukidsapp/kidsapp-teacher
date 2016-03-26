@@ -4,6 +4,7 @@ angular.module('app', [
   'environment',
   'app.authService',
   'app.nav',
+  'dndLists',
   'app.home',
   'app.login',
   'app.class-list',

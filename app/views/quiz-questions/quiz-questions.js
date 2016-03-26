@@ -22,9 +22,22 @@ angular.module('app.quiz-questions', ['ngRoute'])
 
       getQuiz();
       getQuestions();
+      getAllQuestions();
+
+      $scope.models = {
+        selected: null,
+        lists: {
+          "currentQuestions": $scope.questions,
+          "availableQuestions": $scope.allQuestions
+        }
+      };
+
+      $scope.listHeadings = ["Questions In Quiz", "Available Questions"];
+
+
 
       function getQuiz() {
-        $http // '/quizzes/:quizId/questions/:questionId'
+        $http
           .get('http:' + envService.read('apiUrl') + '/quizzes/' + quizId, {
             headers: authService.getAPITokenHeader()
           }).then(success, fail);
@@ -40,7 +53,30 @@ angular.module('app.quiz-questions', ['ngRoute'])
         }
       }
 
-      // quizzes/5/questions
+      function getAllQuestions(){
+        $http
+          .get('http:' + envService.read('apiUrl') + '/questions/', {
+            headers: authService.getAPITokenHeader()
+          }).then(success, fail);
+
+        function success(response) {
+          $scope.allQuestions = response.data;
+          console.log(response);
+          console.log('retrieved successfully');
+          $scope.models.lists.availableQuestions = $scope.allQuestions;
+          console.log($scope.models.lists);
+          console.log($scope.models.availableQuestions.length);
+        }
+
+        function fail(response) {
+          if (response.status == 404) {
+            $scope.allQuestions = {};
+          }
+          console.log(response.data);
+          console.log('retrieved fail');
+        }
+      }
+
       function getQuestions() {
         $http
           .get('http:' + envService.read('apiUrl') + '/quizzes/' + quizId + '/questions', {
@@ -51,6 +87,7 @@ angular.module('app.quiz-questions', ['ngRoute'])
           $scope.questions = response.data;
           console.log(response);
           console.log('retrieved successfully');
+          $scope.models.lists.currentQuestions = $scope.questions;
         }
 
         function fail(response) {
