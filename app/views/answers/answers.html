@@ -77,7 +77,8 @@
 			<td colspan="5">Question has no answers.</td>
 		</tr>
 
-		<tr class="clickable-row {{(answer.isCorrect) ? 'success' : 'danger'}}" ng-repeat="answer in answers">
+		<tr class="clickable-row {{(answer.isCorrect) ? 'success' : 'danger'}}"
+		    ng-repeat="answer in answers | orderBy:'answerText'">
 			<td>{{answer.answerText}}</td>
 			<td>{{(answer.isCorrect) ? "Correct" : "Incorrect"}}</td>
 			<td>
