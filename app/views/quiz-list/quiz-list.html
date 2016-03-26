@@ -61,7 +61,7 @@
         <tr class="ng-scope" ng-show="!quizzes.length">
             <td colspan="5">No quizzes exist yet.</td>
         </tr>
-        <tr class="clickable-row" ng-repeat="quiz in quizzes track by $index">
+	    <tr class="clickable-row" ng-repeat="quiz in quizzes | orderBy:'quizName'">
             <td>{{quiz.quizName}}</td>
             <td>{{quiz.gradeLevel}}</td>
             <td>

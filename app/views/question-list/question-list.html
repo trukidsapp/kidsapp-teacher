@@ -92,7 +92,7 @@
 		<tr class="ng-scope" ng-show="!questions.length">
 			<td colspan="5">There are no questions</td>
 		</tr>
-		<tr class="clickable-row" ng-repeat="question in questions">
+		<tr class="clickable-row" ng-repeat="question in questions | orderBy:'subject'">
 			<td>{{question.subject}}</td>
 			<td>{{question.difficulty}}</td>
 			<td>{{question.type}}</td>
