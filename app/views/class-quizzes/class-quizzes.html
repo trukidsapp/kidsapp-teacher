@@ -1,0 +1,35 @@
+<div class="container">
+    <div id="updateSuccessAlert" class="alert alert-success" style="display: none;">
+        <strong>Update Successful</strong> Your changes were saved successfully.
+    </div>
+
+    <div id="updateFailAlert" class="alert alert-danger" style="display: none;">
+        <strong>Update Failed</strong> A problem occurred while saving your changes.
+    </div>
+
+
+    <h2>Assign Quizzes To Class</h2>
+    <h5>Class Name: {{class.className}}</h5>
+    <h5>Grade: {{class.grade}}</h5>
+    <button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="backBtnClick()">Back</button>
+    </button>
+
+    <div ng-repeat="list in models.lists">
+
+        <div class="col-md-6">
+            <h4 class="column-heading">{{listHeadings[$index]}}</h4>
+            <ul dnd-list="list" class="list-group">
+                <li ng-repeat="quiz in list"
+                    class="list-group-item"
+                    dnd-draggable="quiz"
+                    dnd-moved="list.splice($index, 1)"
+                    dnd-effect-allowed="move"
+                    dnd-selected="models.selected = quiz"
+                    ng-class="{'selected': models.selected === quiz}"
+                >
+                    {{quiz.quizName}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

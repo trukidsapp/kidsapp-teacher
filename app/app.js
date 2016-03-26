@@ -8,6 +8,7 @@ angular.module('app', [
   'app.home',
   'app.login',
   'app.class-list',
+  'app.class-quizzes',
   'app.quiz-list',
   'app.quiz-questions',
   'app.question-list',

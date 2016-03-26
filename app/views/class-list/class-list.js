@@ -121,4 +121,8 @@ angular.module('app.class-list', ['ngRoute'])
       $location.path("/students/" + classId);
     };
 
+    $scope.manageGame = function(classId){
+      $location.path("/class-quizzes/" + classId);
+    }
+
   }]);
