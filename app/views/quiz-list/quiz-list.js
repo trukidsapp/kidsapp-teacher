@@ -10,6 +10,8 @@ angular.module('app.quiz-list', ['ngRoute'])
   }])
 
   .controller('QuizListController', ['$http', '$scope', '$location', 'authService', 'envService', function ($http, $scope, $location, authService, envService) {
+    $scope.searchQuizzes = '';
+    
     var teacherId = authService.getTokenUser().username;
     getQuizzes();
 

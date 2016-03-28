@@ -41,3 +41,9 @@
 .panel-ul{
 	padding: 15px;
 }
+
+/* Search/Filter Box */
+
+.list-search {
+	margin-bottom: 5px;
+}
