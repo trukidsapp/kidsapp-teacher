@@ -27,8 +27,8 @@ angular.module('app.quiz-questions', ['ngRoute'])
       $scope.models = {
         selected: null,
         lists: {
-          "currentQuestions": $scope.questions,
-          "availableQuestions": $scope.allQuestions
+          "currentQuestions": [],
+          "availableQuestions": []
         }
       };
 
@@ -62,14 +62,18 @@ angular.module('app.quiz-questions', ['ngRoute'])
         function success(response) {
           $scope.allQuestions = response.data;
           $scope.models.lists.availableQuestions = $scope.allQuestions;
+          console.log('allQuestions: ' + $scope.allQuestions);
+          console.log('allQuestions: ' + $scope.allQuestions.length);
+          console.log('item 1: ' + $scope.allQuestions[0]);
         }
 
         function fail(response) {
           if (response.status == 404) {
-            $scope.allQuestions = {};
+            $scope.allQuestions = new Array();
           }
           console.log(response.data);
           console.log('retrieved fail');
+          console.log('allQuestions: ' + $scope.allQuestions);
         }
       }
 
@@ -84,19 +88,27 @@ angular.module('app.quiz-questions', ['ngRoute'])
           console.log(response);
           console.log('retrieved successfully');
           $scope.models.lists.currentQuestions = $scope.questions;
+          console.log('questions: ' + $scope.questions);
         }
 
         function fail(response) {
           if (response.status == 404) {
-            $scope.questions = {};
+            $scope.questions = new Array();
           }
           console.log(response.data);
           console.log('retrieved fail');
+          console.log('questions: ' + $scope.questions);
+          console.log('questions: ' + $scope.questions.length);
         }
       }
 
       $scope.backBtnClick = function () {
         $location.path('/quiz-list');
+      }
+
+      $scope.questionFunction = function(item){
+        console.log("Item passed");
+        console.log(item);
       }
 
     }]);
