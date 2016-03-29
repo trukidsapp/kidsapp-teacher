@@ -20,6 +20,8 @@ angular.module('app.students', ['ngRoute'])
 
       var teacherId = authService.getTokenUser().username;
       var classId = $routeParams.classId;
+      console.log("Authentication service:")
+      console.log(authService);
 
       getEvaluation();
       getStudents();
