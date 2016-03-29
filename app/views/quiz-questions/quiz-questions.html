@@ -12,7 +12,6 @@
 	<h5>Quiz Name: {{quiz.quizName}}</h5>
 	<h5>Grade: {{quiz.gradeLevel}}</h5>
 	<button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="backBtnClick()">Back</button>
-	</button>
 
     <div class ="dndlistcss ng-scope" >
 	    <div ng-repeat="(listName, list) in models.lists" class="col-md-6 ng-scope" >
@@ -21,7 +20,9 @@
                     <h4 class="panel-title ng-binding">{{listHeadings[$index]}}</h4>
                 </div>
                 <div class="panel-body ng-scope">
-                    <ul dnd-list="list" class="ng-scope">
+                    <ul dnd-list="list" class="ng-scope"
+                        dnd-inserted="itemInserted(item,listName)"
+                    >
                         <li ng-repeat="question in list"
                             class="ng-binding ng-scope"
                             dnd-draggable="question"
@@ -34,8 +35,6 @@
                         </li>
                     </ul>
                 </div>
-
-
             </div>
 	    </div>
     </div>

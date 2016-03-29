@@ -21,20 +21,29 @@ angular.module('app.class-quizzes', ['ngRoute'])
       var classId = $routeParams.classId;
 
       getClass();
-      getQuizzes();
-      getAllQuizzes();
 
       $scope.models = {
         selected: null,
         lists: {
-          "currentQuizzes": $scope.quizzes,
-          "availableQuizzes": $scope.allQuizzes
+          "currentQuizzes": [],
+          "availableQuizzes": []
         }
       };
 
       $scope.listHeadings = ["Quizzes Assigned to Class", "Available Quizzes"];
 
+      $scope.itemInserted = function(item, list){
 
+        if(list === 'currentQuizzes'){
+          putQuiz(item);
+        }
+        else if(list === 'availableQuizzes'){
+          removeQuiz(item);
+        }
+        else{
+          console.log("An unexpected operation occurred.");
+        }
+      };
 
       function getClass() {
         $http
@@ -45,6 +54,7 @@ angular.module('app.class-quizzes', ['ngRoute'])
         function success(response) {
           $scope.class = response.data;
           console.log('retrieved successfully');
+          getAllQuizzes();
         }
 
         function fail(response) {
@@ -63,6 +73,7 @@ angular.module('app.class-quizzes', ['ngRoute'])
           $scope.allQuizzes = response.data;
           console.log(response);
           $scope.models.lists.availableQuizzes = $scope.allQuizzes;
+          getQuizzes();
         }
 
         function fail(response) {
@@ -85,6 +96,7 @@ angular.module('app.class-quizzes', ['ngRoute'])
           console.log(response);
           console.log('retrieved successfully');
           $scope.models.lists.currentQuizzes = $scope.quizzes;
+          filterQuizzes();
         }
 
         function fail(response) {
@@ -96,8 +108,59 @@ angular.module('app.class-quizzes', ['ngRoute'])
         }
       }
 
+      function putQuiz(quiz){
+        $http
+          .put('http:' + envService.read('apiUrl') + '/classes/' + classId + '/quizzes/' + quiz.id, quiz , {
+            headers: authService.getAPITokenHeader()
+          }).then(success, fail);
+
+        function success(response) {
+          console.log(response);
+          console.log('Quiz posted successfully');
+        }
+
+        function fail(response) {
+          if (response.status == 404) {
+
+          }
+          console.log(response.data);
+          console.log('Quiz post fail');
+        }
+      }
+
+      function removeQuiz(quiz){
+        console.log("Removing question");
+        $http
+          .delete('http:' + envService.read('apiUrl') + '/classes/' + classId + '/quizzes/' + quiz.id, {
+            headers: authService.getAPITokenHeader()
+          }).then(success, fail);
+
+        function success(response) {
+          console.log(response);
+          console.log('Quiz removed successfully');
+        }
+
+        function fail(response) {
+          if (response.status == 404) {
+
+          }
+          console.log(response.data);
+          console.log('Quiz remove fail');
+        }
+      }
+
       $scope.backBtnClick = function () {
         $location.path('/class-list');
       }
 
+      function filterQuizzes(){
+        $scope.models.lists.availableQuizzes = $scope.allQuizzes.filter(function(x){
+          for(var i = 0; i<$scope.quizzes.length; i++){
+            if($scope.quizzes[i].id == x.id){
+              return false;
+            }
+          }
+          return true;
+        });
+      }
     }]);
