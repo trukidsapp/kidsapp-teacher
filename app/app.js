@@ -16,7 +16,7 @@ angular.module('app', [
   'app.students'
 
 ]).config(['$routeProvider', 'envServiceProvider', function ($routeProvider, envServiceProvider) {
-  $routeProvider.otherwise({redirectTo: '/home'});
+  $routeProvider.otherwise({redirectTo: '/class-list'});
 
   envServiceProvider.config({
     domains: {
