@@ -39,7 +39,7 @@ angular.module('app.results', ['ngRoute'])
       function classRetrieveFailure(response) {
         if (response.status == 404) {
           console.log('no classes found');
-          $scope.classes = [];
+          $scope.classes = []
         }
         else {
           console.log('failed' + response.status);
@@ -73,6 +73,8 @@ angular.module('app.results', ['ngRoute'])
         }
       }
 
-      $scope.viewStudent
+      $scope.viewStudentResults = function(studentId){
+        $location.path('/student-results/' + studentId);
+      }
 
     }]);
