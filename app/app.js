@@ -13,7 +13,8 @@ angular.module('app', [
   'app.quiz-questions',
   'app.question-list',
   'app.answers',
-  'app.students'
+  'app.students',
+  'app.results'
 
 ]).config(['$routeProvider', 'envServiceProvider', function ($routeProvider, envServiceProvider) {
   $routeProvider.otherwise({redirectTo: '/class-list'});
