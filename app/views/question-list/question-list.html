@@ -52,6 +52,8 @@
 								<label for="text">Question Text</label>
 								<textarea id="text" ng-model="question.text" class="form-control" ng-minlength="1" ng-required="true"
 								          rows="4"></textarea>
+								<p ng-show="question.type =='FITB'" class="help-block">Please indicate to students which
+									word is missing using _____</p>
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="hint">Hint</label>
