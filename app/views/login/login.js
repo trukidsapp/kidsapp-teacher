@@ -19,7 +19,7 @@ angular.module('app.login', ['ngRoute'])
 
     function authSuccess(response) {
       authService.login(response.data.token);
-      $location.path('/home');
+      $location.path('/class-list');
 
     }
 
