@@ -19,23 +19,24 @@ angular.module('app.quiz-list', ['ngRoute'])
       $http
         .get('http:' + envService.read('apiUrl') + '/quizzes/', {
           headers: authService.getAPITokenHeader()
-        }).then(quizzesRetrieveSuccess, quizzesRetrieveFailure);
+        }).then(success, failure);
+
+      function success(response) {
+        //console.log(response);
+        $scope.quizzes = response.data;
+      }
+
+      function failure(response) {
+        if (response.status == 404) {
+          console.log('no quizzes found');
+          $scope.quizzes = [];
+        }
+        else {
+          console.log('failed' + response.status);
+        }
+      }
     }
 
-    function quizzesRetrieveSuccess(response) {
-      //console.log(response);
-      $scope.quizzes = response.data;
-    }
-
-    function quizzesRetrieveFailure(response) {
-      if (response.status == 404) {
-        console.log('no quizzes found');
-        $scope.quizzes = [];
-      }
-      else {
-        console.log('failed' + response.status);
-      }
-    }
 
     $scope.addQuizBtnClick= function () {
       $scope.action = 'Add';

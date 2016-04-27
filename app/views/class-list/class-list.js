@@ -27,21 +27,21 @@ angular.module('app.class-list', ['ngRoute'])
       $http
         .get('http:' + envService.read('apiUrl') + '/teachers/' + teacherId + '/classes', {
           headers: authService.getAPITokenHeader()
-        }).then(classesRetrieveSuccess, classRetrieveFailure);
-    }
+        }).then(success, failure);
 
-    function classesRetrieveSuccess(response) {
-      //console.log(response);
-      $scope.classes = response.data;
-    }
-
-    function classRetrieveFailure(response) {
-      if (response.status == 404) {
-        console.log('no classes found');
-        $scope.classes = [];
+      function success(response) {
+        //console.log(response);
+        $scope.classes = response.data;
       }
-      else {
-        console.log('failed' + response.status);
+
+      function failure(response) {
+        if (response.status == 404) {
+          console.log('no classes found');
+          $scope.classes = [];
+        }
+        else {
+          console.log('failed' + response.status);
+        }
       }
     }
 
