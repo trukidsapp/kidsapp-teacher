@@ -9,5 +9,43 @@
         <strong>Update Failed</strong> A problem occurred while saving your changes.
     </div>
 
-    <h2>{{}}</h2>
+    <h2>Results for {{student.firstName}} {{student.lastName}}</h2>
+    <button type="button" class="btn btn-xs btn-default btn-vertical-space" ng-click="backBtnClick()">Back</button>
+
+
+    <!-- This is where we list questions by id and text. -->
+
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Questions (click to expand)</th>
+            </tr>
+        </thead>
+        <tbody class="ng-scope" ng-show="!questions.length">
+            <tr>
+                <td colspan="5">No results yet.</td>
+            </tr>
+        </tbody>
+        <tbody ng-repeat="question in questions | orderBy:'id'">
+            <tr class="accordion-toggle" data-toggle="collapse"  data-target="#{{question.question.id}}">
+                <td><h4>{{question.question.text}}</h4></td>
+            </tr>
+            <tr>
+                <td class="accordion-body collapse" id="{{question.question.id}}">
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th class="col-md-6">Response</th>
+                            <th class="col-md-6">Correct</th>
+                        </tr>
+                        <tr class="clickable-row {{(result.isCorrect) ? 'success' : 'danger'}}"
+                            ng-repeat="result in question.results">
+                            <td>{{result.response}}</td>
+                            <td>{{result.isCorrect}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
