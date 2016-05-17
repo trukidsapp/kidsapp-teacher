@@ -23,14 +23,14 @@ angular.module('app', [
   envServiceProvider.config({
     domains: {
       development: ["localhost"],
-      production: ["24.70.42.226"]
+      production: ["server.dufferin.sd73.bc.ca"]
     },
     vars: {
       development: {
         apiUrl: "//localhost:5000/api"
       },
       production: {
-        apiUrl: "//kidsapp-api.herokuapp.com/api"
+        apiUrl: "//server.dufferin.sd73.bc.ca:3000/api"
       }
     }
   });
