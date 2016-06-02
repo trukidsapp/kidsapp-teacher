@@ -15,7 +15,8 @@ angular.module('app', [
   'app.answers',
   'app.students',
   'app.results',
-  'app.student-results'
+  'app.student-results',
+  'app.feedback'
 
 ]).config(['$routeProvider', 'envServiceProvider', function ($routeProvider, envServiceProvider) {
   $routeProvider.otherwise({redirectTo: '/class-list'});
