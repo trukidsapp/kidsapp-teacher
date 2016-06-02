@@ -26,6 +26,9 @@
 
 				<li ng-click="logout()"><a href="#/logout">Log Out</a></li>
 			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-class="{ active: isActive('/feedback')}"><a href="#/feedback">Send Feedback To Developers</a></li>
+			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
