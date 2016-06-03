@@ -1,0 +1,156 @@
+<div class="container">
+
+    <div id="updateSuccessAlert" class="alert alert-success" style="display: none;">
+        <strong>Update Successful</strong> Your feedback was sent successfully.
+    </div>
+
+    <div id="updateFailAlert" class="alert alert-danger" style="display: none;">
+        <strong>Update Failed</strong> A problem occurred while sending your feedback.
+    </div>
+
+    <!--Send Bug Report Modal-->
+    <div class="modal fade" id="bugReportModal" tabindex="-1" role="dialog" aria-labelledby="bugReportModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form name="bugReportForm" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="bugReportModalLabel">Bug Report</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bugTitle">Title</label>
+                                    <input ng-model="feedback.title" type="text" minlength="1" id="bugTitle" ng-required="true"
+                                           class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bugErrorCode">Error Code (if provided)</label>
+                                    <input ng-model="feedback.errorCode" id="bugErrorCode" type="text"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="bugDesc">Description</label>
+                                    <textarea id="bugDesc" ng-model="feedback.text" class="form-control" ng-minlength="1" ng-required="true"
+                                              rows="20"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" ng-disabled="bugReportForm.$invalid" class="btn btn-default"
+                                    ng-click="sendFeedbackDoneBtnClick()">Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Send General Feedback Modal-->
+    <div class="modal fade" id="generalFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="generalFeedbackModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form name="generalReportForm" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="generalFeedbackModalLabel">General Feedback</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="genTitle">Title</label>
+                                    <input ng-model="feedback.title" type="text" minlength="1" id="genTitle" ng-required="true"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="genDesc">Description</label>
+                                    <textarea id="genDesc" ng-model="feedback.text" class="form-control" ng-minlength="1" ng-required="true"
+                                              rows="20"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" ng-disabled="generalReportForm.$invalid" class="btn btn-default"
+                                    ng-click="sendFeedbackDoneBtnClick()">Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Send Suggestions Modal-->
+    <div class="modal fade" id="suggestionsModal" tabindex="-1" role="dialog" aria-labelledby="suggestionsModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form name="suggestionsReportForm" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="suggestionsReportFormLabel">Suggestions</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="sugTitle">Title</label>
+                                    <input ng-model="feedback.title" type="text" minlength="1" id="sugTitle" ng-required="true"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="sugDesc">Description</label>
+                                    <textarea id="sugDesc" ng-model="feedback.text" class="form-control" ng-minlength="1" ng-required="true"
+                                              rows="20"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" ng-disabled="generalReportForm.$invalid" class="btn btn-default"
+                                    ng-click="sendFeedbackDoneBtnClick()">Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <h2>Feedback Options</h2>
+    <br>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <button type="button" class="btn btn-block btn-danger btn-vertical-space btn-block-tall" ng-click="sendBugReportBtnClick()">
+                Send Bug Report
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <button type="button" class="btn btn-block btn-warning btn-vertical-space btn-block-tall" ng-click="sendFeedbackBtnClick()">
+                Send General Feedback
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <button type="button" class="btn btn-block btn-info btn-vertical-space btn-block-tall" ng-click="sendSuggestionsBtnClick()">
+                Send Suggestions
+            </button>
+        </div>
+    </div>
+</div>
